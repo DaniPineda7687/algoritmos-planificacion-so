@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/main.css">
+    <title>Algoritmos de planificacion de procesos</title>
+</head>
+<body>
+    <h1>Algoritmos de planificación de procesos</h1>
+    <div class="informacion-usuario">
+        <form class="form-tipo-datos">
+            <h2>¿Qué tipo de simulación desea ejecutar?</h2>
+            <label for="datos-aleatorios" class="label-aleatorios">
+            <input type="radio" id="datos-aleatorios"
+            name="tipo-datos" value="aleatorio">
+            Aleatoria</label>
+            <label for="datos-manuales" class="label-manuales">
+            <input type="radio" id="datos-manuales"
+            name="tipo-datos" value="manual">
+            Controlada</label>
+            <div class="buttons">
+                <input type="button" class="button-enviar-tipo-datos" value="Aceptar">
+                <input type="button" onclick="refresh()" value="Refrescar">
+            </div>
+        </form>
+    </div>
+    <div class="resultados">
+    </div>
+    <script src="./scripts/main.js"></script>
+    <script src="./scripts/gestion-informacion-usuario.js"></script>
+    <script src="./scripts/form-aleatorios.js"></script>
+</body>
+</html>
