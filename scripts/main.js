@@ -47,6 +47,67 @@ buttonTipoDatos.addEventListener("click",()=>{
     
 })
 
+function crearSeccionResultados(infoFCFS,infoSJF,infoPrioridad){
+    let mainContainerResultados = document.createElement("div");
+    let contenedorResultados = document.createElement("div");
+    let contenedorGrafica = document.createElement("div");
+    let resultadosGrafica = document.createElement("div");
+    resultadosGrafica.classList.add("contenedor-grafica-resultados");
+    contenedorGrafica.classList.add("grafica-container");
+    contenedorResultados.classList.add("main-container-procesos");
+    let resultadosFCFS = document.createElement("div");
+    resultadosFCFS.classList.add("proceso-contenedor");
+    let title = document.createElement("h2");
+    title.textContent="Resultados"
+    let titleFCFS = document.createElement("h2");
+    titleFCFS.textContent="Algoritmo FCFS";
+    resultadosFCFS.appendChild(titleFCFS);
+
+    let tiempoPromedioEsperaFCFS = document.createElement("p");
+    let tiempoRetornoFCFS = document.createElement("p");
+    tiempoPromedioEsperaFCFS.textContent=`Tiempo promedio de espera: ${infoFCFS[0].toFixed(2)}ms`
+    tiempoRetornoFCFS.textContent=`Tiempo promedio de retorno: ${infoFCFS[1].toFixed(2)}ms`
+    resultadosFCFS.appendChild(tiempoPromedioEsperaFCFS);
+    resultadosFCFS.appendChild(tiempoRetornoFCFS);
+
+    let resultadosSJF = document.createElement("div");
+    resultadosSJF.classList.add("proceso-contenedor");
+    let titleSJF = document.createElement("h2");
+    titleSJF.textContent="Algoritmo SJF";
+    resultadosSJF.appendChild(titleSJF);
+    let tiempoPromedioEsperaSJF = document.createElement("p");
+    let tiempoRetornoSJF = document.createElement("p");
+    tiempoPromedioEsperaSJF.textContent=`Tiempo promedio de espera: ${infoSJF[0].toFixed(2)}ms`
+    tiempoRetornoSJF.textContent=`Tiempo promedio de retorno: ${infoSJF[1].toFixed(2)}ms`
+    resultadosSJF.appendChild(tiempoPromedioEsperaSJF);
+    resultadosSJF.appendChild(tiempoRetornoSJF);
+
+    let resultadosPrioridad = document.createElement("div");
+    resultadosPrioridad.classList.add("proceso-contenedor");
+    let titlePrioridad = document.createElement("h2");
+    titlePrioridad.textContent="Algoritmo Prioridad";
+    resultadosPrioridad.appendChild(titlePrioridad);
+    let tiempoPromedioEsperaPrioridad = document.createElement("p");
+    let tiempoRetornoPrioridad = document.createElement("p");
+    tiempoPromedioEsperaPrioridad.textContent=`Tiempo promedio de espera: ${infoPrioridad[0].toFixed(2)}ms`
+    tiempoRetornoPrioridad.textContent=`Tiempo promedio de retorno: ${infoPrioridad[1].toFixed(2)}ms`
+    resultadosPrioridad.appendChild(tiempoPromedioEsperaPrioridad);
+    resultadosPrioridad.appendChild(tiempoRetornoPrioridad);
+
+    contenedorResultados.appendChild(resultadosFCFS);
+    contenedorResultados.appendChild(resultadosSJF);
+    contenedorResultados.appendChild(resultadosPrioridad);
+
+    
+    mainContainerResultados.classList.add("container-resultados");
+    resultadosGrafica.appendChild(contenedorGrafica);
+    resultadosGrafica.appendChild(contenedorResultados);
+    mainContainerResultados.appendChild(title);
+    mainContainerResultados.appendChild(resultadosGrafica);
+    return mainContainerResultados;
+}
+
+
 function refresh(){
     location.reload();
 }
@@ -126,12 +187,23 @@ function validarInputsUser(){
         bandera=bandera&&true;
         if(!(tiempoMinimoCPU>=tiempoMaximoCPU)){
             bandera=bandera&&true;;
-            if(!(tiempoMinimoLlegada>=tiempoMaximoLlegada)){
+            if(!((tiempoMinimoLlegada>=tiempoMaximoLlegada))){
                 bandera=bandera&&true;;
                 if(!(prioridadMinima>=prioridadMaxima)){
                     bandera=bandera&&true;;
                     if(!(quantumMinimo>=quantumMaximo)){
-                        bandera=bandera&&true;;
+                        bandera=bandera&&true;
+                        if(!(tiempoMaximoLlegada>tiempoMinimoCPU)){
+                            bandera=bandera&&true;
+                        }else{
+                            alert("El tiempo máximo de llegada no puede ser mayor al tiempo mínimo de CPU");
+                            let maxLlegada = document.querySelector(".tiempo-maximo-llegada");
+                            maxLlegada.value="";
+                            maxLlegada.setAttribute("id","input-error");
+                            maxLlegada.placeholder=`Ingrese valores menores a ${tiempoMinimoCPU}`;
+                            maxLlegada.focus();
+                            bandera=false;
+                        }
                     }else{
                         alert("El quantum mínimo no puede ser mayor o igual al quantum máximo");
                         let minQuantum = document.querySelector(".quantum-minimo");

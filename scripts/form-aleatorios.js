@@ -14,8 +14,8 @@ function crearFormCondiciones(){
                 element.disabled=true;
             });
             button.disabled=true;
-            /*console.log(generarProcesosAleatorios());*/
-            mostrarInformacionGenerada();
+            
+            startAll(mostrarInformacionGenerada());
         }
         
     })

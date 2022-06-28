@@ -62,5 +62,6 @@ function mostrarInformacionGenerada(){
 
     mainContainer.appendChild(mainContainerProcesos);
     containerInfoUser.appendChild(mainContainer);
+    return procesos;
 }
 
