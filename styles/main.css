@@ -209,7 +209,10 @@ input[type=button]:hover {
   width: 85%;
   max-width: 900px;
   min-width: 300px;
-  height: 500px;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  padding-bottom: 0.4rem;
   color: #ffffff;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -219,13 +222,16 @@ input[type=button]:hover {
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 .container-resultados .main-container-procesos {
-  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 50%;
+  width: 100%;
 }
 .container-resultados .main-container-procesos div {
   margin-bottom: 1.2rem;
+}
+.container-resultados .main-container-procesos .proceso-contenedor p {
+  margin-bottom: 0.4rem;
+  margin-top: 0.4rem;
 }
 
 .container-resultados > h2 {
