@@ -51,6 +51,8 @@ function startFCFS(procesosOriginal){
     let busqueda = document.querySelectorAll(".resultados-algoritmo-FCFS")
     if((busqueda.length==0)){
         containerInfoUser.appendChild(generarTablaIndicadores(datosCompletos,promedioTiemposRetorno,promedioTiempoEspera,promedioTiemposFinalizacion));
+        let contenedor = document.querySelector(".gantt-container");
+        generarDiagramaGanttFCFS(datosCompletos,contenedor);
     }
     return resultados;
 }
@@ -58,6 +60,10 @@ function startFCFS(procesosOriginal){
 function generarTablaIndicadores(procesos,promTRetornoN,promTEsperaN,promFinalizacionN){
     let contenedorResultadosFCFS = document.createElement("div");
     let contenedorTabla = document.createElement("div");
+    let contenedorGantt = document.createElement("div");
+    let titleGantt = document.createElement("h2");
+    titleGantt.textContent="Diagrama de Gantt";
+    contenedorGantt.classList.add("gantt-container");
     contenedorTabla.classList.add("table-container");
     let title = document.createElement("h2");
     title.textContent="Algoritmo FCFS";
@@ -135,5 +141,7 @@ function generarTablaIndicadores(procesos,promTRetornoN,promTEsperaN,promFinaliz
     contenedorResultadosFCFS.classList.add("resultados-algoritmo-FCFS");
     contenedorResultadosFCFS.appendChild(title);
     contenedorResultadosFCFS.appendChild(contenedorTabla);
+    contenedorResultadosFCFS.appendChild(titleGantt);
+    contenedorResultadosFCFS.appendChild(contenedorGantt);
     return contenedorResultadosFCFS;
 }

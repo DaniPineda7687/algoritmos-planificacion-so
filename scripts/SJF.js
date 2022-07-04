@@ -28,15 +28,19 @@ function startSJF(procesosOriginal){
     }
 
     datosCompletos.sort((a,b)=>{
-        if(a.tiempoLlegada!=b.tiempoLlegada){
+        /*if(a.tiempoLlegada!=b.tiempoLlegada){
             return a.tiempoLlegada-b.tiempoLlegada;
         }else{
             return a.tiempoCPU-b.tiempoCPU;
-        }
+        }*/
+        return a.tiempoEspera - b.tiempoEspera;
     })
     let busqueda = document.querySelectorAll(".resultados-algoritmo-SJF")
     if((busqueda.length==0)){
         containerInfoUser.appendChild(generarTablaIndicadoresSJF(datosCompletos,datosSJF[4],datosSJF[3],datosSJF[5]));
+        let contenedor = document.querySelector(".gantt-container-SJF");
+        generarDiagramaGanttSJF(datosCompletos,contenedor);
+        console.log(contenedor);
     }
     return resultados;
     
@@ -121,6 +125,10 @@ function generarTablaIndicadoresSJF(procesos,promTRetornoN,promTEsperaN,promFina
     let contenedorResultadosSJF = document.createElement("div");
     let contenedorTabla = document.createElement("div");
     contenedorTabla.classList.add("table-container");
+    let contenedorGantt = document.createElement("div");
+    let titleGantt = document.createElement("h2");
+    titleGantt.textContent="Diagrama de Gantt";
+    contenedorGantt.classList.add("gantt-container-SJF");
     let title = document.createElement("h2");
     title.textContent="Algoritmo SJF";
     let table = document.createElement("table");
@@ -197,5 +205,7 @@ function generarTablaIndicadoresSJF(procesos,promTRetornoN,promTEsperaN,promFina
     contenedorResultadosSJF.classList.add("resultados-algoritmo-SJF");
     contenedorResultadosSJF.appendChild(title);
     contenedorResultadosSJF.appendChild(contenedorTabla);
+    contenedorResultadosSJF.appendChild(titleGantt);
+    contenedorResultadosSJF.appendChild(contenedorGantt);
     return contenedorResultadosSJF;
 }
