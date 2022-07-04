@@ -42,68 +42,133 @@ buttonTipoDatos.addEventListener("click",()=>{
             datosAleatorios.disabled=true;
             datosManuales.disabled=true;
             buttonTipoDatos.disabled=true;
+        }else{
+            containerInfoUser.appendChild(crearFormNumeroProcesos());
+            datosAleatorios.disabled=true;
+            datosManuales.disabled=true;
+            buttonTipoDatos.disabled=true;
         }
     }
     
 })
 
-function crearSeccionResultados(infoFCFS,infoSJF,infoPrioridad){
+function crearSeccionResultados(infoFCFS,infoSJF,infoPrioridad,infoRoundRobin){
     let mainContainerResultados = document.createElement("div");
     let contenedorResultados = document.createElement("div");
     let contenedorGrafica = document.createElement("div");
     let resultadosGrafica = document.createElement("div");
+    let resultadosFCFS = document.createElement("div");
+    let title = document.createElement("h2");
+    let titleFCFS = document.createElement("h2");
+    let tiempoPromedioEsperaFCFS = document.createElement("p");
+    let tiempoRetornoFCFS = document.createElement("p");
+    let tiempoFinalizacionFCFS = document.createElement("p");
+    let resultadosSJF = document.createElement("div");
+    let titleSJF = document.createElement("h2");
+    let tiempoPromedioEsperaSJF = document.createElement("p");
+    let tiempoRetornoSJF = document.createElement("p");
+    let tiempoFinalizacionSJF = document.createElement("p");
+    let resultadosPrioridad = document.createElement("div");
+    let titlePrioridad = document.createElement("h2");
+    let tiempoPromedioEsperaPrioridad = document.createElement("p");
+    let tiempoRetornoPrioridad = document.createElement("p");
+    let tiempoFinalizacionPrioridad = document.createElement("p");
+    let resultadosRound = document.createElement("div");
+    let titleRound = document.createElement("h2");
+    let tiempoPromedioEsperaRound = document.createElement("p");
+    let tiempoRetornoRound = document.createElement("p");
+    
+    let encabezadoGrafica = document.createElement("div");
+    let titleGrafica = document.createElement("h2");
+    let containerLabelTEspera = document.createElement("div");
+    let containerLabelTRetorno = document.createElement("div");
+    let containerLabelTFinalizacion = document.createElement("div");
+    let colorTiempoEspera = document.createElement("div");
+    let colorTiempoRetorno = document.createElement("div");
+    let colorTiempoFinalizacion = document.createElement("div");
+
+    let labelTEspera = document.createElement("p");
+    let labelTRetorno = document.createElement("p");
+    let labelTFinalizacion = document.createElement("p");
+    
+    labelTEspera.textContent="Tiempo promedio de espera";
+    labelTRetorno.textContent="Tiempo promedio de retorno";
+    labelTFinalizacion.textContent="Tiempo promedio de respuesta";
+    colorTiempoEspera.classList.add("color-tiempo-espera");
+    colorTiempoRetorno.classList.add("color-tiempo-retorno");
+    colorTiempoFinalizacion.classList.add("color-tiempo-finalizacion");
+    containerLabelTEspera.classList.add("etiquetas-grafica");
+    containerLabelTRetorno.classList.add("etiquetas-grafica");
+    containerLabelTFinalizacion.classList.add("etiquetas-grafica");
+    containerLabelTEspera.appendChild(colorTiempoEspera);
+    containerLabelTEspera.appendChild(labelTEspera);
+    containerLabelTRetorno.appendChild(colorTiempoRetorno);
+    containerLabelTRetorno.appendChild(labelTRetorno);
+    containerLabelTFinalizacion.appendChild(colorTiempoFinalizacion);
+    containerLabelTFinalizacion.appendChild(labelTFinalizacion);
+
+    encabezadoGrafica.classList.add("encabezado-grafica");
+    titleGrafica.textContent="Gráfica comparativa entre los 4 algoritmos"
+    encabezadoGrafica.appendChild(titleGrafica);
+    encabezadoGrafica.appendChild(containerLabelTEspera);
+    encabezadoGrafica.appendChild(containerLabelTRetorno);
+    encabezadoGrafica.appendChild(containerLabelTFinalizacion);
     resultadosGrafica.classList.add("contenedor-grafica-resultados");
     contenedorGrafica.classList.add("grafica-container");
+    resultadosGrafica.appendChild(encabezadoGrafica);
+    contenedorGrafica.classList.add("ct-chart");
+    contenedorGrafica.classList.add("ct-perfect-fourth");
+
     contenedorResultados.classList.add("main-container-procesos");
-    let resultadosFCFS = document.createElement("div");
     resultadosFCFS.classList.add("proceso-contenedor");
-    let title = document.createElement("h2");
     title.textContent="Resultados"
-    let titleFCFS = document.createElement("h2");
     titleFCFS.textContent="Algoritmo FCFS";
     resultadosFCFS.appendChild(titleFCFS);
 
-    let tiempoPromedioEsperaFCFS = document.createElement("p");
-    let tiempoRetornoFCFS = document.createElement("p");
     tiempoPromedioEsperaFCFS.textContent=`Tiempo promedio de espera: ${infoFCFS[0].toFixed(2)}ms`
     tiempoRetornoFCFS.textContent=`Tiempo promedio de retorno: ${infoFCFS[1].toFixed(2)}ms`
+    tiempoFinalizacionFCFS.textContent=`Tiempo promedio de respuesta: ${infoFCFS[2].toFixed(2)}ms`
     resultadosFCFS.appendChild(tiempoPromedioEsperaFCFS);
     resultadosFCFS.appendChild(tiempoRetornoFCFS);
+    resultadosFCFS.appendChild(tiempoFinalizacionFCFS);
 
-    let resultadosSJF = document.createElement("div");
     resultadosSJF.classList.add("proceso-contenedor");
-    let titleSJF = document.createElement("h2");
     titleSJF.textContent="Algoritmo SJF";
     resultadosSJF.appendChild(titleSJF);
-    let tiempoPromedioEsperaSJF = document.createElement("p");
-    let tiempoRetornoSJF = document.createElement("p");
     tiempoPromedioEsperaSJF.textContent=`Tiempo promedio de espera: ${infoSJF[0].toFixed(2)}ms`
     tiempoRetornoSJF.textContent=`Tiempo promedio de retorno: ${infoSJF[1].toFixed(2)}ms`
+    tiempoFinalizacionSJF.textContent=`Tiempo promedio de respuesta: ${infoSJF[2].toFixed(2)}ms`
     resultadosSJF.appendChild(tiempoPromedioEsperaSJF);
     resultadosSJF.appendChild(tiempoRetornoSJF);
-
-    let resultadosPrioridad = document.createElement("div");
+    resultadosSJF.appendChild(tiempoFinalizacionSJF);
     resultadosPrioridad.classList.add("proceso-contenedor");
-    let titlePrioridad = document.createElement("h2");
     titlePrioridad.textContent="Algoritmo Prioridad";
     resultadosPrioridad.appendChild(titlePrioridad);
-    let tiempoPromedioEsperaPrioridad = document.createElement("p");
-    let tiempoRetornoPrioridad = document.createElement("p");
     tiempoPromedioEsperaPrioridad.textContent=`Tiempo promedio de espera: ${infoPrioridad[0].toFixed(2)}ms`
     tiempoRetornoPrioridad.textContent=`Tiempo promedio de retorno: ${infoPrioridad[1].toFixed(2)}ms`
+    tiempoFinalizacionPrioridad.textContent=`Tiempo promedio de respuesta: ${infoPrioridad[2].toFixed(2)}ms`
     resultadosPrioridad.appendChild(tiempoPromedioEsperaPrioridad);
     resultadosPrioridad.appendChild(tiempoRetornoPrioridad);
+    resultadosPrioridad.appendChild(tiempoFinalizacionPrioridad);
+
+    resultadosRound.classList.add("proceso-contenedor");
+    tiempoPromedioEsperaRound.textContent=`Tiempo promedio de espera: ${infoRoundRobin[0].toFixed(2)}ms`
+    titleRound.textContent="Algoritmo Round Robin";
+    resultadosRound.appendChild(titleRound);
+    tiempoRetornoRound.textContent=`Tiempo promedio de retorno: ${infoRoundRobin[1].toFixed(2)}ms`
+    resultadosRound.appendChild(tiempoPromedioEsperaRound);
+    resultadosRound.appendChild(tiempoRetornoRound);
 
     contenedorResultados.appendChild(resultadosFCFS);
     contenedorResultados.appendChild(resultadosSJF);
     contenedorResultados.appendChild(resultadosPrioridad);
-
-    
+    contenedorResultados.appendChild(resultadosRound);
     mainContainerResultados.classList.add("container-resultados");
     resultadosGrafica.appendChild(contenedorGrafica);
     resultadosGrafica.appendChild(contenedorResultados);
     mainContainerResultados.appendChild(title);
     mainContainerResultados.appendChild(resultadosGrafica);
+
     return mainContainerResultados;
 }
 
@@ -112,7 +177,7 @@ function refresh(){
     location.reload();
 }
 
-function crearLabelsAleatorio(labelText,inputMinPlaceholder,inputMaxPlaceholder,min,max,nombreClaseMin,nombreClaseMax){
+function crearLabelsAleatorio(labelText,inputMinPlaceholder,inputMaxPlaceholder,min,max,nombreClaseMin,nombreClaseMax,disabled,valorDefault){
     let label = document.createElement("label");
     let inputsContainer = document.createElement("div");
     let inputMin = document.createElement("input");
@@ -128,6 +193,8 @@ function crearLabelsAleatorio(labelText,inputMinPlaceholder,inputMaxPlaceholder,
     inputMax.placeholder=inputMaxPlaceholder;
     inputMax.min=min;
     inputMax.max=max;
+    inputMin.value=valorDefault;
+    inputMin.disabled= disabled;
     inputMax.classList.add("input-user-info");
     inputMax.classList.add(nombreClaseMax);
     inputsContainer.classList.add("input-container");
@@ -139,7 +206,7 @@ function crearLabelsAleatorio(labelText,inputMinPlaceholder,inputMaxPlaceholder,
 }
 
 
-/*function crearLabels(labelText,inputPlaceholder,min,max,nombreClase){
+function crearLabels(labelText,inputPlaceholder,min,max,nombreClase){
     let label = document.createElement("label");
     let input = document.createElement("input");
     label.textContent=labelText;
@@ -151,9 +218,9 @@ function crearLabelsAleatorio(labelText,inputMinPlaceholder,inputMaxPlaceholder,
     input.classList.add(nombreClase);
     label.appendChild(input);
     return label;
-}*/
+}
 
-function validarInputsUser(){
+function validarInputsAleatoriosUser(){
     let numeroMaximoPro= parseFloat(document.querySelector(".numero-maximo-procesos").value);
     let numeroMinimoPro= parseFloat(document.querySelector(".numero-minimo-procesos").value);
     let tiempoMinimoCPU= parseFloat(document.querySelector(".tiempo-minimo-CPU").value);
@@ -218,18 +285,11 @@ function validarInputsUser(){
                     let minPrioridad = document.querySelector(".prioridad-minima");
                     minPrioridad.value="";
                     minPrioridad.setAttribute("id","input-error");
-                    minPrioridad.placeholder=`Ingrese valores menores a ${numeroMaximoPro}`;
+                    minPrioridad.placeholder=`Ingrese valores menores a ${prioridadMaxima}`;
                     minPrioridad.focus();
                     bandera=false;
                 }
             }else{
-                alert("El tiempo mínimo de llegada no puede ser mayor o igual al tiempo máximo de llegada");
-                let minLlegada = document.querySelector(".tiempo-minimo-llegada");
-                minLlegada.value="";
-                minLlegada.setAttribute("id","input-error");
-                minLlegada.placeholder=`Ingrese valores menores a ${tiempoMaximoLlegada}`;
-                minLlegada.focus();
-                bandera=false;
             }
         }else{
             alert("El tiempo mínimo de CPU no puede ser mayor o igual al tiempo máximo de CPU");
@@ -250,5 +310,196 @@ function validarInputsUser(){
         bandera=false;
     }
 
+    return bandera;
+}
+
+function crearGraficaResultados(procesos,q){
+    console.log(procesos);
+    console.log(startFCFS(procesos)[0]);
+    var data = {
+        labels: ['FCFS', 'SJF', 'PRIORIDAD', 'ROUND ROBIN'],
+        series: [
+          [startFCFS(procesos)[0],startSJF(procesos)[0],startPrioridad(procesos)[0],startRoundRobin(procesos,q)[0]],
+          [startFCFS(procesos)[1],startSJF(procesos)[1],startPrioridad(procesos)[1],startRoundRobin(procesos,q)[1]],
+          [startFCFS(procesos)[2],startSJF(procesos)[2],startPrioridad(procesos)[2],0]
+        ]
+      };
+      
+      var options = {
+        seriesBarDistance: 10
+      };
+      
+      var responsiveOptions = [
+        ['screen and (max-width: 100%)', {
+          seriesBarDistance: 5,
+          axisX: {
+            labelInterpolationFnc: function (value) {
+              return value[0];
+            }
+          }
+        }]
+      ];
+      
+      new Chartist.Bar('.ct-chart', data, options, responsiveOptions);
+}
+
+function crearFormNumeroProcesos(){
+    let container = document.createElement("div");
+    let title = document.createElement("h2");
+    let inputNumeroProcesos = document.createElement("input");
+    let buttonAceptar = document.createElement("input");
+    title.textContent="Número de procesos de la simulación";
+    inputNumeroProcesos.placeholder="Digite el número de procesos de la simulación";
+    inputNumeroProcesos.type="number";
+    buttonAceptar.value="Aceptar";
+    buttonAceptar.type="button";
+
+    buttonAceptar.addEventListener("click",()=>{
+        let numeroProcesos = document.querySelector(".manual-numero-procesos");
+        if(validarInputsManuales()){
+            containerInfoUser.appendChild(crearFormManual(parseInt(numeroProcesos.value)));
+            inputNumeroProcesos.disabled=true;
+            buttonAceptar.disabled=true;
+        }
+    })
+
+    inputNumeroProcesos.classList.add("informacion-manual-user");
+    inputNumeroProcesos.classList.add("manual-numero-procesos");
+    container.classList.add("container-user-manual");
+    container.appendChild(title);
+    container.appendChild(inputNumeroProcesos);
+    container.appendChild(buttonAceptar);
+    return container;
+}
+
+function crearFormManual(numeroProcesos){
+    let container = document.createElement("div");
+    let title = document.createElement("h2");
+    title.textContent="Condiciones para los procesos";
+    container.appendChild(title);
+    for (let i=0;i<numeroProcesos;i++){
+        let subtitle = document.createElement("p");
+        subtitle.textContent=`Proceso ${i+1}`;
+        
+        let inputTiempoCPU = document.createElement("input");
+        inputTiempoCPU.type="number";
+        inputTiempoCPU.placeholder=`Tiempo CPU para el proceso ${i+1}`;
+        inputTiempoCPU.classList.add(`tiempo-cpu-${i+1}`);
+        inputTiempoCPU.classList.add(`tiempos-cpu`);
+        inputTiempoCPU.classList.add(`informacion-manual-user`);
+
+        let inputTiempoLlegada = document.createElement("input");
+        inputTiempoLlegada.type="number";
+        inputTiempoLlegada.placeholder=`Tiempo llegada para el proceso ${i+1}`;
+        inputTiempoLlegada.classList.add(`tiempo-llegada-${i+1}`);
+        inputTiempoLlegada.classList.add(`tiempos-llegada`);
+
+        let inputPrioridad = document.createElement("input");
+        inputPrioridad.type="number";
+        inputPrioridad.placeholder=`Prioridad para el proceso ${i+1}`;
+        inputPrioridad.classList.add(`prioridad-${i+1}`);
+        inputPrioridad.classList.add(`prioridad`);
+        inputPrioridad.classList.add(`informacion-manual-user`);
+
+        container.appendChild(subtitle);
+        container.appendChild(inputTiempoCPU);
+        container.appendChild(inputTiempoLlegada);
+        container.appendChild(inputPrioridad);
+    }
+    let inputQuantum = document.createElement("input");
+    
+    inputQuantum.type="number";
+    inputQuantum.placeholder=`Quantum de la simulación`;
+    inputQuantum.classList.add(`quantum`);
+    inputQuantum.classList.add(`informacion-manual-user`);
+    let subtitle = document.createElement("p");
+    subtitle.textContent="Quantum";
+    container.appendChild(subtitle);
+    container.appendChild(inputQuantum);
+    let buttonAceptar = document.createElement("input");
+    buttonAceptar.value="Aceptar";
+    buttonAceptar.type="button";
+    container.appendChild(buttonAceptar);
+    buttonAceptar.addEventListener("click",()=>{
+    let procesosManual =[];
+        for(let i=0;i<numeroProcesos;i++){
+            let inputTiempoCPU = document.querySelector(`.tiempo-cpu-${i+1}`);
+            let inputTiempoLlegada = document.querySelector(`.tiempo-llegada-${i+1}`);
+            let inputPrioridad = document.querySelector(`.prioridad-${i+1}`);
+            let inputQuantum = document.querySelector(`.quantum`);
+            let tiempoCPU = parseInt(inputTiempoCPU.value);
+            let tiempoLlegada = parseInt(inputTiempoLlegada.value);
+            let prioridad = parseInt(inputPrioridad.value);
+            let quantum = parseInt(inputQuantum.value);
+            procesosManual.push({
+                idProceso:`Proceso ${i+1}`,
+                tiempoCPU : tiempoCPU,
+                tiempoLlegada : tiempoLlegada,
+                prioridad : prioridad,
+                quantum:quantum,
+                tiempoEspera:0,
+                tiempoRetorno:0,
+                tiempoFinalizacion:0
+            });
+        }
+        if(validarInputsManuales()&&validarInputsManualesTLlegada()){
+            startAll(procesosManual,procesosManual[0].quantum);
+            crearGraficaResultados(procesosManual,procesosManual[0].quantum);
+            buttonAceptar.disabled=true;
+            let inputs = document.querySelectorAll(".informacion-manual-user");
+            let inputsPrioridad = document.querySelectorAll(".tiempos-llegada");
+            inputs.forEach(element => {
+                element.disabled=true;
+            });
+            inputsPrioridad.forEach(element => {
+                element.disabled=true;
+            });
+        }
+    });
+    container.classList.add("container-user-manual");
+    return container;
+}
+
+function validarInputsManuales(){
+    let inputs = document.querySelectorAll(".informacion-manual-user");
+    let bandera=true;
+    inputs.forEach(element => {
+        if(element.value<=0  || element.value.length==0){
+            alert("Ingrese valores validos para la simulacion");
+            element.value="";
+            element.setAttribute("id","input-error");
+            element.focus();
+            element.placeholder="Digite valores validos para la simulacion (>0)";
+            bandera=false;
+
+        }else{
+            element.removeAttribute("id");
+            bandera=bandera&&true;
+
+        }
+    });
+    console.log(inputs);
+    return bandera;
+}
+
+function validarInputsManualesTLlegada(){
+    let inputs = document.querySelectorAll(".tiempos-llegada");
+    let bandera=true;
+    inputs.forEach(element => {
+        if(element.value<0  || element.value.length==0){
+            alert("Ingrese valores validos para la simulacion");
+            element.value="";
+            element.setAttribute("id","input-error");
+            element.focus();
+            element.placeholder="Digite valores validos para la simulacion (>0)";
+            bandera=false;
+
+        }else{
+            element.removeAttribute("id");
+            bandera=bandera&&true;
+
+        }
+    });
+    console.log(inputs);
     return bandera;
 }

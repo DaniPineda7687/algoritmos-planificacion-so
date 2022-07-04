@@ -14,12 +14,17 @@ function generarProcesosAleatorios(){
     let numeroProcesos = parseInt(generarAleatorios(numeroMinimoPro,numeroMaximoPro));
     for(let i=0;i<numeroProcesos;i++){
         procesos.push({
+            idProceso:`Proceso ${i+1}`,
             tiempoCPU : parseInt(generarAleatorios(tiempoMinimoCPU,tiempoMaximoCPU).toFixed(2)),
             tiempoLlegada : parseInt(generarAleatorios(tiempoMinimoLlegada,tiempoMaximoLlegada).toFixed(2)),
-            prioridad : parseInt(generarAleatorios(prioridadMinima,prioridadMaxima))
+            prioridad : parseInt(generarAleatorios(prioridadMinima,prioridadMaxima)),
+            quantum:parseInt(generarAleatorios(quantumMinimo,quantumMaximo)),
+            tiempoEspera:0,
+            tiempoRetorno:0,
+            tiempoFinalizacion:0
         });
     }
-
+    procesos[0].tiempoLlegada=0;
     return procesos;
 }
 
@@ -33,12 +38,15 @@ function mostrarInformacionGenerada(){
     let mainContainerProcesos = document.createElement("div");
     let titleContainer = document.createElement("h2");
     let detalles = document.createElement("p");
+    let quantum = document.createElement("p");
     detalles.textContent=`Número de procesos generados: ${procesos.length}`;
+    quantum.textContent=`Quantum: ${procesos[0].quantum}`;
     mainContainerProcesos.classList.add("main-container-procesos");
     mainContainer.classList.add("informacion-container");
     titleContainer.textContent="Información generada"
     mainContainer.appendChild(titleContainer);
     mainContainer.appendChild(detalles);
+    mainContainer.appendChild(quantum);
     for(let i=0;i<procesos.length;i++){
         let contenedorProceso = document.createElement("div");
         contenedorProceso.classList.add("proceso-contenedor");
@@ -62,6 +70,7 @@ function mostrarInformacionGenerada(){
 
     mainContainer.appendChild(mainContainerProcesos);
     containerInfoUser.appendChild(mainContainer);
-    return procesos;
+    let infoGenerada = [procesos,procesos[0].quantum];
+    return infoGenerada;
 }
 

@@ -1,66 +1,78 @@
-function startFCFS(procesosOriginal){
+
+function startRoundRobin(procesosOriginal,q){
     let procesos = procesosOriginal.slice();
     let datosCompletos = procesosOriginal.slice();
-
-    procesos.sort((a,b)=>{
-        return a.tiempoLlegada - b.tiempoLlegada;
-    });
     datosCompletos.sort((a,b)=>{
         return a.tiempoLlegada-b.tiempoLlegada;
     });
-    let tiemposFinalizacion = [];
-    let tiemposCPU = [];
-    let tiemposLlegada = [];
-    let tiemposEspera = [];
-    let tiemposRetorno = [];
-
+    const findWaitingTime = (processes, n, bt, wt, quantum) => {
+        let rem_bt = new Array(n).fill(0);
+        for (let i = 0; i < n; i++)
+            rem_bt[i] = bt[i];
+ 
+        let t = 0;
+        while (1) {
+            let done = true;
+            for (let i = 0; i < n; i++) {
+                if (rem_bt[i] > 0) {
+                    done = false;
+                    if (rem_bt[i] > quantum) {
+                        t += quantum;
+                        rem_bt[i] -= quantum;
+                    }
+                    else {
+                        t = t + rem_bt[i];
+                        wt[i] = t - bt[i];
+                        rem_bt[i] = 0;
+                    }
+                }
+            }
+            if (done == true)
+                break;
+        }
+    }
+    const findTurnAroundTime = (processes, n, bt, wt, tat) => {
+        for (let i = 0; i < n; i++)
+            tat[i] = bt[i] + wt[i];
+    }
+    const findavgTime = (processes, n, bt, quantum) => {
+        let wt = new Array(n).fill(0), tat = new Array(n).fill(0);
+        let total_wt = 0, total_tat = 0;
+        findWaitingTime(processes, n, bt, wt, quantum);
+        findTurnAroundTime(processes, n, bt, wt, tat);
+        for (let i = 0; i < n; i++) {
+            total_wt = total_wt + wt[i];
+            total_tat = total_tat + tat[i];
+            datosCompletos[i].tiempoEspera=wt[i];
+            datosCompletos[i].tiempoRetorno=tat[i];
+        }
+        return [total_wt / n,total_tat / n]
+    }
+    let cont =1;
+    let nombreProcesos=[];
+    let tiemposCPU=[];
     procesos.forEach(element => {
         tiemposCPU.push(element.tiempoCPU);
-        tiemposLlegada.push(element.tiempoLlegada);
+        nombreProcesos.push(cont);
+        cont++;
     });
 
-    tiemposFinalizacion[0]=tiemposLlegada[0]+tiemposCPU[0];
-    tiemposRetorno[0]=tiemposFinalizacion[0]-tiemposLlegada[0];
-    tiemposEspera[0]=tiemposRetorno[0]-tiemposCPU[0];
-
-    for(let i = 1;i<procesos.length;i++){
-        tiemposFinalizacion[i]=tiemposCPU[i]+tiemposFinalizacion[i-1]
-        tiemposRetorno[i]=tiemposFinalizacion[i]-tiemposLlegada[i];
-        tiemposEspera[i]=tiemposRetorno[i]-tiemposCPU[i];
-    }
-    let sumaTiemposEspera=0;
-    let sumaTiemposRetorno =0;
-    let sumaTiemposFinalizacion=0;
-
-    for(let i=0;i<procesos.length;i++){
-        sumaTiemposEspera+=tiemposEspera[i];
-        sumaTiemposRetorno+=tiemposRetorno[i];
-        sumaTiemposFinalizacion+=tiemposFinalizacion[i];
-    }
-    
-    for(let i=0;i<procesos.length;i++){
-        datosCompletos[i].tiempoEspera=tiemposEspera[i];
-        datosCompletos[i].tiempoRetorno = tiemposRetorno[i];
-        datosCompletos[i].tiempoFinalizacion=tiemposFinalizacion[i];
-    }
-    
-    let promedioTiempoEspera=sumaTiemposEspera/procesos.length;
-    let promedioTiemposRetorno = sumaTiemposRetorno/procesos.length;
-    let promedioTiemposFinalizacion = sumaTiemposFinalizacion/procesos.length;
-    let resultados=[promedioTiempoEspera,promedioTiemposRetorno,promedioTiemposFinalizacion];
-    let busqueda = document.querySelectorAll(".resultados-algoritmo-FCFS")
+    console.log(findavgTime(procesos, procesos.length, tiemposCPU, q));
+    console.log(procesos)
+    let resultados = findavgTime(procesos, procesos.length, tiemposCPU, q);
+    let busqueda = document.querySelectorAll(".resultados-algoritmo-round")
     if((busqueda.length==0)){
-        containerInfoUser.appendChild(generarTablaIndicadores(datosCompletos,promedioTiemposRetorno,promedioTiempoEspera,promedioTiemposFinalizacion));
+        containerInfoUser.appendChild(generarTablaIndicadoresRound(datosCompletos,resultados[1],resultados[0]));
     }
     return resultados;
 }
 
-function generarTablaIndicadores(procesos,promTRetornoN,promTEsperaN,promFinalizacionN){
-    let contenedorResultadosFCFS = document.createElement("div");
+function generarTablaIndicadoresRound(procesos,promTRetornoN,promTEsperaN){
+    let contenedorResultadosRound = document.createElement("div");
     let contenedorTabla = document.createElement("div");
     contenedorTabla.classList.add("table-container");
     let title = document.createElement("h2");
-    title.textContent="Algoritmo FCFS";
+    title.textContent="Algoritmo Round Robin";
     let table = document.createElement("table");
     table.classList.add("table");
     let headTable = document.createElement("thead")
@@ -72,8 +84,7 @@ function generarTablaIndicadores(procesos,promTRetornoN,promTEsperaN,promFinaliz
     headerTLlegada.textContent="Tiempo llegada (ms)";
     let headerTCpu = document.createElement("th");
     headerTCpu.textContent="Tiempo CPU (ms)";
-    let headerTFinish = document.createElement("th");
-    headerTFinish.textContent="Tiempo de finalizacion (ms)"
+
     let headerTAround = document.createElement("th");
     headerTAround.textContent="Tiempo de retorno (ms)"
     let headerWaiting = document.createElement("th");
@@ -82,7 +93,6 @@ function generarTablaIndicadores(procesos,promTRetornoN,promTEsperaN,promFinaliz
     headerRow.appendChild(headerProceso);
     headerRow.appendChild(headerTLlegada);
     headerRow.appendChild(headerTCpu);
-    headerRow.appendChild(headerTFinish);
     headerRow.appendChild(headerTAround);
     headerRow.appendChild(headerWaiting);
     headTable.appendChild(headerRow);
@@ -95,18 +105,15 @@ function generarTablaIndicadores(procesos,promTRetornoN,promTEsperaN,promFinaliz
         let tLlegada = document.createElement("th");
         let tCPU = document.createElement("th");
         let tEspera = document.createElement("th");
-        let tFinalizacion = document.createElement("th");
         let tRetorno = document.createElement("th");
         nombre.textContent=procesos[i].idProceso;
         tLlegada.textContent=procesos[i].tiempoLlegada;
         tCPU.textContent=procesos[i].tiempoCPU;
         tEspera.textContent=procesos[i].tiempoEspera;
-        tFinalizacion.textContent=procesos[i].tiempoFinalizacion;
         tRetorno.textContent=procesos[i].tiempoRetorno;
         procesoRenglon.appendChild(nombre);
         procesoRenglon.appendChild(tLlegada);
         procesoRenglon.appendChild(tCPU);
-        procesoRenglon.appendChild(tFinalizacion);
         procesoRenglon.appendChild(tRetorno);
         procesoRenglon.appendChild(tEspera);
         tableBody.appendChild(procesoRenglon);
@@ -118,22 +125,19 @@ function generarTablaIndicadores(procesos,promTRetornoN,promTEsperaN,promFinaliz
     titleProm.colSpan=3;
     let promTRetorno = document.createElement("th");
     let promTEspera = document.createElement("th");
-    let promTFinalizacion = document.createElement("th");
 
     promTRetorno.textContent=promTRetornoN.toFixed(2);
     promTEspera.textContent=promTEsperaN.toFixed(2);
-    promTFinalizacion.textContent=promFinalizacionN.toFixed(2);
 
     promedioRenglon.appendChild(titleProm);
-    promedioRenglon.appendChild(promTFinalizacion);
     promedioRenglon.appendChild(promTRetorno);
     promedioRenglon.appendChild(promTEspera);
     tableBody.appendChild(promedioRenglon);
 
     table.appendChild(tableBody);
     contenedorTabla.appendChild(table);
-    contenedorResultadosFCFS.classList.add("resultados-algoritmo-FCFS");
-    contenedorResultadosFCFS.appendChild(title);
-    contenedorResultadosFCFS.appendChild(contenedorTabla);
-    return contenedorResultadosFCFS;
+    contenedorResultadosRound.classList.add("resultados-algoritmo-round");
+    contenedorResultadosRound.appendChild(title);
+    contenedorResultadosRound.appendChild(contenedorTabla);
+    return contenedorResultadosRound;
 }
