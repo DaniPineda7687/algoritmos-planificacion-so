@@ -295,8 +295,7 @@ input[type=button]:hover {
   padding: 1rem 1rem 1.5rem 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  width: 95%;
-  max-width: 1200px;
+  width: 90%;
   min-width: 300px;
   height: -webkit-max-content;
   height: -moz-max-content;
@@ -342,8 +341,7 @@ input[type=button]:hover {
   padding: 1rem 1rem 1.5rem 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  width: 95%;
-  max-width: 1200px;
+  width: 90%;
   min-width: 300px;
   height: -webkit-max-content;
   height: -moz-max-content;
@@ -389,8 +387,7 @@ input[type=button]:hover {
   padding: 1rem 1rem 1.5rem 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  width: 95%;
-  max-width: 1200px;
+  width: 90%;
   min-width: 300px;
   height: -webkit-max-content;
   height: -moz-max-content;
@@ -436,8 +433,7 @@ input[type=button]:hover {
   padding: 1rem 1rem 1.5rem 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  width: 95%;
-  max-width: 1200px;
+  width: 90%;
   min-width: 300px;
   height: -webkit-max-content;
   height: -moz-max-content;
@@ -560,8 +556,14 @@ input[type=button]:hover {
 }
 
 table {
+  table-layout: fixed;
   font-family: arial, sans-serif;
   border-collapse: collapse;
+}
+table th, table td {
+  text-align: center;
+  width: 100px;
+  word-wrap: break-word;
 }
 
 td, th, tr {

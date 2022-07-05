@@ -28,12 +28,12 @@ function startSJF(procesosOriginal){
     }
 
     datosCompletos.sort((a,b)=>{
-        /*if(a.tiempoLlegada!=b.tiempoLlegada){
+        if(a.tiempoLlegada!=b.tiempoLlegada){
             return a.tiempoLlegada-b.tiempoLlegada;
         }else{
             return a.tiempoCPU-b.tiempoCPU;
-        }*/
-        return a.tiempoEspera - b.tiempoEspera;
+        }
+        //return a.tiempoEspera - b.tiempoEspera;
     })
     let busqueda = document.querySelectorAll(".resultados-algoritmo-SJF")
     if((busqueda.length==0)){

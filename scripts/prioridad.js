@@ -63,13 +63,24 @@ function startPrioridad(procesosOriginal){
             }else{
                 return a.prioridad-b.prioridad;
             }
-        })
+        });
+        let indicador = true;
+        procesos.forEach(element => {
+            if(element.tiempoLlegada==0){
+                indicador=indicador&&true;
+            }else{
+            indicador=false;
+            }
+        });
         let resultados=[promEspera/procesos.length, promRetorno/procesos.length,promFinalizacion/procesos.length];
         let busqueda = document.querySelectorAll(".resultados-algoritmo-prioridad")
         if((busqueda.length==0)){
             containerInfoUser.appendChild(generarTablaIndicadoresPrioridad(datosCompletos,resultados[1],resultados[0],resultados[2]));
-            let contenedor = document.querySelector(".gantt-container-prioridad");
-            generarDiagramaGanttPrioridad(datosCompletos,contenedor);
+            if(indicador){
+                let contenedor = document.querySelector(".gantt-container-prioridad");
+                generarDiagramaGanttPrioridad(datosCompletos,contenedor);
+            }
+            
         }
         return resultados;
 }

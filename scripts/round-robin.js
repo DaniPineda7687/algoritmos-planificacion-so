@@ -162,6 +162,7 @@ function generarTablaIndicadoresRound(procesos,promTRetornoN,promTEsperaN){
     contenedorResultadosRound.classList.add("resultados-algoritmo-round");
     contenedorResultadosRound.appendChild(title);
     contenedorResultadosRound.appendChild(contenedorTabla);
+    contenedorResultadosRound.appendChild(titleGantt);
     contenedorResultadosRound.appendChild(contenedorGantt);
     return contenedorResultadosRound;
 }
