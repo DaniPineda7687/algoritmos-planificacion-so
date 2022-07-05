@@ -295,8 +295,8 @@ input[type=button]:hover {
   padding: 1rem 1rem 1.5rem 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  width: 85%;
-  max-width: 900px;
+  width: 95%;
+  max-width: 1200px;
   min-width: 300px;
   height: -webkit-max-content;
   height: -moz-max-content;
@@ -342,8 +342,8 @@ input[type=button]:hover {
   padding: 1rem 1rem 1.5rem 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  width: 85%;
-  max-width: 900px;
+  width: 95%;
+  max-width: 1200px;
   min-width: 300px;
   height: -webkit-max-content;
   height: -moz-max-content;
@@ -389,8 +389,8 @@ input[type=button]:hover {
   padding: 1rem 1rem 1.5rem 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  width: 85%;
-  max-width: 900px;
+  width: 95%;
+  max-width: 1200px;
   min-width: 300px;
   height: -webkit-max-content;
   height: -moz-max-content;
@@ -436,8 +436,8 @@ input[type=button]:hover {
   padding: 1rem 1rem 1.5rem 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  width: 85%;
-  max-width: 900px;
+  width: 95%;
+  max-width: 1200px;
   min-width: 300px;
   height: -webkit-max-content;
   height: -moz-max-content;
@@ -535,7 +535,27 @@ input[type=button]:hover {
   max-height: 300px;
 }
 
+.gantt-container-round {
+  height: 500px;
+  overflow-x: scroll;
+  max-height: 300px;
+}
+
 .gantt-container-SJF table tr th {
+  padding: 0.8rem;
+}
+
+.gantt-container-round table tr th {
+  padding: 0.8rem;
+}
+
+.gantt-container-prioridad {
+  height: 500px;
+  overflow-x: scroll;
+  max-height: 300px;
+}
+
+.gantt-container-prioridad table tr th {
   padding: 0.8rem;
 }
 

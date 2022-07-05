@@ -67,7 +67,9 @@ function startPrioridad(procesosOriginal){
         let resultados=[promEspera/procesos.length, promRetorno/procesos.length,promFinalizacion/procesos.length];
         let busqueda = document.querySelectorAll(".resultados-algoritmo-prioridad")
         if((busqueda.length==0)){
-        containerInfoUser.appendChild(generarTablaIndicadoresPrioridad(datosCompletos,resultados[1],resultados[0],resultados[2]));
+            containerInfoUser.appendChild(generarTablaIndicadoresPrioridad(datosCompletos,resultados[1],resultados[0],resultados[2]));
+            let contenedor = document.querySelector(".gantt-container-prioridad");
+            generarDiagramaGanttPrioridad(datosCompletos,contenedor);
         }
         return resultados;
 }
@@ -76,6 +78,10 @@ function generarTablaIndicadoresPrioridad(procesos,promTRetornoN,promTEsperaN,pr
     let contenedorResultadosPrioridad = document.createElement("div");
     let contenedorTabla = document.createElement("div");
     contenedorTabla.classList.add("table-container");
+    let contenedorGantt = document.createElement("div");
+    let titleGantt = document.createElement("h2");
+    titleGantt.textContent="Diagrama de Gantt";
+    contenedorGantt.classList.add("gantt-container-prioridad");
     let title = document.createElement("h2");
     title.textContent="Algoritmo Prioridad";
     let table = document.createElement("table");
@@ -160,5 +166,7 @@ function generarTablaIndicadoresPrioridad(procesos,promTRetornoN,promTEsperaN,pr
     contenedorResultadosPrioridad.classList.add("resultados-algoritmo-prioridad");
     contenedorResultadosPrioridad.appendChild(title);
     contenedorResultadosPrioridad.appendChild(contenedorTabla);
+    contenedorResultadosPrioridad.appendChild(titleGantt);
+    contenedorResultadosPrioridad.appendChild(contenedorGantt);
     return contenedorResultadosPrioridad;
 }

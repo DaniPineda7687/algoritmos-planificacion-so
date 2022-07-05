@@ -59,10 +59,29 @@ function startRoundRobin(procesosOriginal,q){
 
     console.log(findavgTime(procesos, procesos.length, tiemposCPU, q));
     console.log(procesos)
+    let indicador = true;
+    procesos.forEach(element => {
+        if(element.tiempoLlegada==0){
+            indicador=indicador&&true;
+        }else{
+            indicador=false;
+        }
+    });
     let resultados = findavgTime(procesos, procesos.length, tiemposCPU, q);
     let busqueda = document.querySelectorAll(".resultados-algoritmo-round")
     if((busqueda.length==0)){
         containerInfoUser.appendChild(generarTablaIndicadoresRound(datosCompletos,resultados[1],resultados[0]));
+        if(indicador){
+            console.log("sin tiempos")
+            let contenedor = document.querySelector(".gantt-container-round");
+            if(q%2==0){
+                console.log("pares")
+                generarDiagramaGanttPares(procesos,contenedor,q);
+            }else{
+                console.log("impares")
+                generarDiagramaGanttImpares(procesos,contenedor,q);
+            }
+        }
     }
     return resultados;
 }
@@ -71,6 +90,10 @@ function generarTablaIndicadoresRound(procesos,promTRetornoN,promTEsperaN){
     let contenedorResultadosRound = document.createElement("div");
     let contenedorTabla = document.createElement("div");
     contenedorTabla.classList.add("table-container");
+    let contenedorGantt = document.createElement("div");
+    let titleGantt = document.createElement("h2");
+    titleGantt.textContent="Diagrama de Gantt";
+    contenedorGantt.classList.add("gantt-container-round");
     let title = document.createElement("h2");
     title.textContent="Algoritmo Round Robin";
     let table = document.createElement("table");
@@ -139,5 +162,6 @@ function generarTablaIndicadoresRound(procesos,promTRetornoN,promTEsperaN){
     contenedorResultadosRound.classList.add("resultados-algoritmo-round");
     contenedorResultadosRound.appendChild(title);
     contenedorResultadosRound.appendChild(contenedorTabla);
+    contenedorResultadosRound.appendChild(contenedorGantt);
     return contenedorResultadosRound;
 }
